@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speech to Excel</title>
+</head>
+<body>
+  <h1>Speech to Excel</h1>
+  <button id="startBtn">Start Recording</button>
+  <div id="transcription"></div>
+
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const transcriptionDiv = document.getElementById('transcription');
+
+    const recognition = new webkitSpeechRecognition(); // For Chrome, use webkitSpeechRecognition
+
+    recognition.lang = 'en-US';
+    recognition.continuous = true;
+    recognition.interimResults = true;
+
+    recognition.onresult = function(event) {
+      const transcript = event.results[event.results.length - 1][0].transcript;
+      transcriptionDiv.textContent += transcript + ' ';
+    };
+
+    startBtn.addEventListener('click', function() {
+      recognition.start();
+    });
+  </script>
+</body>
+</html>
